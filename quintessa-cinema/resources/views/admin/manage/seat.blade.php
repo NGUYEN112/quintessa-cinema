@@ -1,0 +1,33 @@
+@extends('layouts.admin-layout')
+
+@section('admin-content')
+<div class="page-holder w-100 d-flex flex-wrap">
+	<div class="container-fluid px-xl-5">
+		<section class="py-5">
+			<div class="row">
+				<div class="col-lg-12 mb-4">
+					<div class="card">
+						<div class="card-header">
+							<h6 class="text-uppercase mb-0">Quản Lý Ghế</h6>
+							<a href="{{route('admin.addfilm')}}" title="Thêm mới" style="position: absolute;right: 35px;top: 22px;"><i class="fas fa-plus-square text-success" style="font-size: 24px"></i></a>
+						</div>
+						<div class="card-body"> 
+							<div>                 
+								<select class="form-control w-25 mb-5" id="phong">
+									<option>Vui lòng chọn phòng</option>
+									@foreach ($rooms as $room)
+									<option value="{{$room->id}}">{{$room->room_name}}</option>
+									@endforeach
+								</select>
+							</div> 
+							<div id="dsghe">
+								
+							</div> 
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+	</div>
+</div>
+@endsection
