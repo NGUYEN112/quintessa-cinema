@@ -12,14 +12,25 @@
 						<div class="card-body">
 							<form action="" method="POST" class="form-horizontal">
 								@csrf
-								
+
 								<div class="form-group row">
 									<label class="col-md-3 form-control-label">Tên phòng</label>
 									<div class="col-md-9">
-										<input id="inputHorizontalSuccess" name="room_name" type="text" placeholder="Tên Phòng"  class="form-control form-control-success">
+										<input id="inputHorizontalSuccess" name="room_name" type="text" placeholder="Tên Phòng" class="form-control form-control-success">
 									</div>
 								</div>
-								<div class="form-group row">       
+								<div class="form-group row">
+									<label class="col-md-3 form-control-label">Chọn rạp</label>
+									<div class="col-md-9">
+										<select class="form-control w-25 mb-5" id="phong" name="cinema_id">
+											<option>Vui lòng chọn rạp</option>
+											@foreach ($cinemas as $cinema)
+											<option value="{{$cinema->id}}">{{$cinema->cinema_name}}</option>
+											@endforeach
+										</select>
+									</div>
+								</div>
+								<div class="form-group row">
 									<div class="col-md-9 m-auto">
 										<input type="submit" value="THÊM" class="btn btn-primary">
 									</div>

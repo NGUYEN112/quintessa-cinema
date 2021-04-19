@@ -4,6 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class AdminMiddleware
 {
@@ -14,8 +15,17 @@ class AdminMiddleware
      * @param  \Closure  $next
      * @return mixed
      */
-    public function handle(Request $request, Closure $next)
+    public function handle($request, Closure $next)
     {
-        return $next($request);
+        if (Auth::check()) {
+            $user=Auth::user();
+            if ($user->level==0) 
+                return $next($request);
+            else
+                return abort('403');
+        }
+        else
+            return redirect()->route('cinema.login');
+        
     }
 }

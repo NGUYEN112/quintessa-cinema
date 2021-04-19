@@ -39,7 +39,7 @@ Route::group(['prefix' => 'cinema'], function() {
     Route::get('/logout',[AuthController::class,'logout'])->name('cinema.logout');
 });
 
-Route::group(['prefix' => 'admin'], function() {
+Route::group(['prefix' =>'admin','middleware' => 'admin'], function() {
     Route::get('/',[AdminController::class,'homeAdmin'])->name('admin.home');
 
     //route quan ly cinema//

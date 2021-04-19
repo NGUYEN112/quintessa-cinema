@@ -33,6 +33,7 @@ class AuthController extends Controller
         $user->name=$request->name;
         $user->email=$request->email;
         $user->password=bcrypt($request->password);
+        $user->level = 1;
         $user->save();
         return redirect()->route('cinema.loginpage');
     }
@@ -42,7 +43,11 @@ class AuthController extends Controller
             $email =$request->email;
             $password=$request->password;
         if(Auth::attempt(['email'=>$email,'password'=>$password])){
+            if(Auth::user()->level == 0){
+                return redirect()->route('admin.home');
+            }else {
             return redirect()->route('cinema.home');
+            }
         }else{
             return redirect()->route('cinema.loginpage');
         }

@@ -18,7 +18,6 @@
   <link rel="stylesheet" href="{{asset('/storage/admin_assets/css/custom.css')}}">
   <link rel="stylesheet" href="{{asset('/storage/admin_assets/css/style.css')}}">
   <!-- Favicon-->
-  <link rel="shortcut icon" href="{{asset('/storage/admin_assets/img/favicon.png?3')}}">
 </head>
 
 <body>
@@ -54,13 +53,13 @@
       <div class="text-gray-400 text-uppercase px-3 px-lg-4 py-4 font-weight-bold small headings-font-family">QUẢN LÝ</div>
       <ul class="sidebar-menu list-unstyled">
         <li class="sidebar-list-item"><a href="{{route('admin.home')}}" class="sidebar-link text-dark"><i class="o-home-1 mr-3 text-gray"></i><span>Home</span></a></li>
-        <li class="sidebar-list-item"><a href="{{route('admin.managefilm')}}" class="sidebar-link text-dark"><i class="o-table-content-1 mr-3 text-gray"></i><span>Quản Lý Phim</span></a></li>
-        <li class="sidebar-list-item"><a href="{{route('admin.manageticket')}}" class="sidebar-link text-dark"><i class="o-table-content-1 mr-3 text-gray"></i><span>Quản Lý Vé</span></a></li>
-        <li class="sidebar-list-item"><a href="{{route('admin.managescreening')}}" class="sidebar-link text-dark"><i class="o-survey-1 mr-3 text-gray"></i><span>Quản Lý Lịch Chiếu</span></a></li>
+        <li class="sidebar-list-item"><a href="{{route('admin.managefilm')}}" class="sidebar-link text-dark"><i class="fas fa-film mr-3 text-gray"></i><span>Quản Lý Phim</span></a></li>
+        <li class="sidebar-list-item"><a href="{{route('admin.manageticket')}}" class="sidebar-link text-dark"><i class="fas fa-ticket-alt mr-3 text-gray"></i><span>Quản Lý Vé</span></a></li>
+        <li class="sidebar-list-item"><a href="{{route('admin.managescreening')}}" class="sidebar-link text-dark"><i class="fas fa-calendar-week mr-3 text-gray"></i><span>Quản Lý Lịch Chiếu</span></a></li>
         <li class="sidebar-list-item"><a href="{{route('admin.managecinema')}}" class="sidebar-link text-dark"><i class="o-survey-1 mr-3 text-gray"></i><span>Quản Lý Rạp</span></a></li>
-        <li class="sidebar-list-item"><a href="{{route('admin.manageroom')}}" class="sidebar-link text-dark"><i class="o-survey-1 mr-3 text-gray"></i><span>Quản Lý Phòng</span></a></li>
-        <li class="sidebar-list-item"><a href="{{route('admin.manageseat')}}" class="sidebar-link text-dark"><i class="o-survey-1 mr-3 text-gray"></i><span>Quản Lý Ghế</span></a></li>
-        <li class="sidebar-list-item"><a href="{{route('admin.manageuser')}}" class="sidebar-link text-dark"><i class="o-survey-1 mr-3 text-gray"></i><span>Quản Lý Người dùng</span></a></li>
+        <li class="sidebar-list-item"><a href="{{route('admin.manageroom')}}" class="sidebar-link text-dark"><i class="fab fa-windows mr-3 text-gray"></i><span>Quản Lý Phòng</span></a></li>
+        <li class="sidebar-list-item"><a href="{{route('admin.manageseat')}}" class="sidebar-link text-dark"><i class="fas fa-couch mr-3 text-gray"></i><span>Quản Lý Ghế</span></a></li>
+        <li class="sidebar-list-item"><a href="{{route('admin.manageuser')}}" class="sidebar-link text-dark"><i class="fas fa-user-friends mr-3 text-gray"></i><span>Quản Lý Người dùng</span></a></li>
       </ul>
 
     </div>

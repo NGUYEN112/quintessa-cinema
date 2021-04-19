@@ -8,8 +8,8 @@ $idscreening=$screening->id
 @endphp
 <div class="container">
     <div class="row">
-        <div class="col-sm-9" style="background-color: #f26b38;margin-top: 50px">
-            <div style="position: relative;">
+        <div class="col-sm-9" style="background-color: #f26b38;margin-top: 50px; position: relative;">
+            <div>
                 <div class="booking">
                     <table class="table mt-3">
                         <thead class="thead-dark">
@@ -45,7 +45,7 @@ $idscreening=$screening->id
                     </div>
 
 
-                    <div class="seatStructure">
+                    <div class="seatStructure" style="position:absolute;" >
                         <center>
                             <div class="screen">SCREEN</div>
                             <div class="seatcolor">
@@ -55,7 +55,7 @@ $idscreening=$screening->id
                             </div>
                             <div class="seatBooking">
                                 @foreach ($seats as $seat)
-                                
+
                                 <div class="seatRow">
                                     <div class="seatRowName">
                                         {{$seat->row}}
@@ -168,7 +168,7 @@ $idscreening=$screening->id
                 $(".seatSelected").each(function() {
                     allseat.push($(this).attr('id'));
                 });
-                var url = "http://localhost/quintessa-cinema/ajaxdatve";
+                var url = "http://localhost/quintessa-cinema/ajaxorderticket";
                 var screening_id = $('.screening_id').val();
                 var user_id = $('.user_id').val();
 

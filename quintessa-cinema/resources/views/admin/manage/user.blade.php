@@ -8,9 +8,30 @@
 				<div class="col-lg-12 mb-4">
 					<div class="card">
 						<div class="card-header">
-							<h6 class="text-uppercase mb-0">Quản Lý User</h6>
-							<a href="{{route('admin.addfilm')}}" title="Thêm mới" style="position: absolute;right: 35px;top: 22px;"><i class="fas fa-plus-square text-success" style="font-size: 24px"></i></a>
+							<h6 class="text-uppercase mb-0">Quản Lý Người Dùng</h6>
 						</div>
+						<div class="card-body">                           
+							<table class="table table-hover card-text">
+								<thead>
+									<tr>
+										<th>No.</th>
+										<th>Tên thành viên</th>
+										<th>Email</th>
+										<th>Q-Point</th>
+
+									</tr>
+								</thead>
+								<tbody>
+									@foreach ($users as $key => $user)                     		
+									<tr>
+										<td>{{$key+1}}</td>
+										<td>{{$user->name}}</td>			
+										<td>{{$user->email}}</td>
+										</tr>
+										@endforeach
+									</tbody>
+								</table>
+							</div>
 					</div>
 				</div>
 			</section>

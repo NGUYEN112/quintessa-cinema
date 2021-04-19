@@ -54,7 +54,7 @@ class AdminController extends Controller
 	}
 
 	public function manageUser()
-	{	$users = User::paginate(10);
+	{	$users = User::where('level','<>','0')->paginate(10);
 		return view('admin.manage.user',compact('users'));
 	}
 	public function manageTicket()
@@ -117,12 +117,12 @@ class AdminController extends Controller
 			'description'=>$request->description,
 			'ticket_price'=>$request->ticket_price
 		]);
-		return redirect()->back()->with('message','Đã Sửa Thành Công ^_^');
+		return redirect()->back()->with('message','Chỉnh Sửa Thành Công!');
 	}
 	public function deleteFilm($id)
 	{
 		Film::where('id',$id)->delete();
-		return redirect('admin/managefilm');
+		return redirect()->route('admin.managefilm');
 	}
 	public function addCinemaPage()
 	{
@@ -135,19 +135,20 @@ class AdminController extends Controller
 		$cinemas->infomation = $request->infomation;
 		$cinemas->save();
 
-		return redirect('admin/managecinema');
+		return redirect()->route('admin.managecinema');
 	}
 	public function deleteCinema($id)
 	{
 		Cinema::where('id',$id)->delete();
-		return redirect('admin/managecinema');
+		return redirect()->route('admin.managecinema');
 	}
 
 	public function addScreeningPage()
 	{
 		$films = Film::where('status','1')->get();
 		$cinemas = Cinema::all();
-		return view('admin.screening.addscreening',compact('films','cinemas'));
+		$rooms = Room::all();
+		return view('admin.screening.addscreening',compact('films','cinemas','rooms'));
 	}
 	public function addScreening(Request $request)
 	{
@@ -167,7 +168,7 @@ class AdminController extends Controller
 			$tickets->user_id = null;
 			$tickets->save();
 		}
-		return redirect('admin/managescreening');
+		return redirect()->route('admin.managescreening');
 	}
 
 	public function editScreeningPage($id)
@@ -176,32 +177,38 @@ class AdminController extends Controller
 		return view('admin.screening.editscreening',compact('screenings'));
 	}
 
-	public function editScreening()
+	public function editScreening(Request $request,$id)
 	{
-		
+		$screenings = Screening::findOrFail($id);
+		$screenings->date = $request->date;
+		$screenings->start_time = $request->start_time;
+		$screenings->save();
+		return redirect()->route('admin.managescreening');
 	}
 	public function deleteScreeningPage($id)
 	{
 		Screening::where('id',$id)->delete();
-		return redirect('admin/managescreening');
+		return redirect()->route('admin.managescreening');
 	}
 	public function addRoomPage()
 	{
-		return view('admin.room.addroom');
+		$cinemas = Cinema::all();
+		return view('admin.room.addroom', compact('cinemas'));
 	}
 	public function addRoom(Request $request)
 	{
 		$rooms = new Room();
 		$rooms->room_name = $request->room_name;
+		$rooms->cinema_id = $request->cinema_id;
 		$rooms->save();
-		return redirect('admin/manageroom');
+		return redirect()->route('admin.manageroom');
 	}
 	public function deleteRoom($id)
 	{
 		Room::where('id',$id)->delete();
-		return redirect('admin/manageroom');
+		return redirect()->route('admin.manageroom');
 	}
-	
+
 	public function getRoom($id)
 	{
 		$rooms = Room::where('id_rap',$id)->get();
