@@ -18,7 +18,7 @@ class AdminMiddleware
     public function handle($request, Closure $next)
     {
         if (Auth::check()) {
-            $user=Auth::user();
+            $user = Auth::user();
             if ($user->level==0) 
                 return $next($request);
             else

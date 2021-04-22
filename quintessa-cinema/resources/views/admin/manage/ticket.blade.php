@@ -48,7 +48,7 @@
 										<td>{{date('d-m-y',strtotime($l->screening->date))}}&nbsp;|&nbsp;{{date('G:i',strtotime($l->screening->start_time))}}</td>
 										<td>
 											@foreach ($l['seat_id'] as $seats)
-											{{$seats->seat->row}}{{$seats->seat->number}};
+											{{$seats->seat->row}}{{$seats->seat->number}}-
 											@endforeach
 										</td>
 

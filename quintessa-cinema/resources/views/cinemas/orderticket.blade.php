@@ -8,9 +8,8 @@ $idscreening=$screening->id
 @endphp
 <div class="container">
     <div class="row">
-        <div class="col-sm-9" style="background-color: #f26b38;margin-top: 50px; position: relative;">
-            <div>
-                <div class="booking">
+        <div class="col-sm-9" style="background-color: #f26b38 ;margin-top: 20px; position: relative;">
+            <!-- <div class="booking">
                     <table class="table mt-3">
                         <thead class="thead-dark">
                             <tr>
@@ -33,50 +32,55 @@ $idscreening=$screening->id
                                         <input class="ticket_count" type="number" id="Numseats" style="width: 50px;" value="0" min="0" onchange="ticketPrice()">
                                     </div>
                                 </td>
-                                <td id="ticket_price">50000</td>
+                                @foreach ($screenings as $screening)
+                                <td id="ticket_price">{{$screening->film->ticket_price}}</td>
+                                @endforeach
                                 <td><span class="total_price"></span>&nbsp;vnđ</td>
                             </tr>
                         </tbody>
                     </table>
-                </div>
-                <div class="seatbooking" style="background-color: #fff;height: 600px">
+                </div> -->
+            <div class="seatbooking" style="background-color: #fff;height: 600px">
 
-                    <div class="inputForm">
+                <div class="inputForm">
+                </div>
+
+
+                <div class="seatStructure col-10" style="position:absolute;">
+
+                    <div class="screen ">SCREEN</div>
+                    <div class="seatcolor">
+                        <span class="seat-gray">Ghế đã bán</span>
+                        <span class="seat-blue">Có thể chọn</span>
+                        <span class="seat-green">Ghế đang chọn</span>
+                    </div>
+                    <div class="seatBooking">
+                        @foreach ($seats as $seat)
+                        <div class="seatRow">
+                            <div class="seatRowName">
+                                {{$seat->row}}
+                            </div>
+                            @foreach ($seat['number'] as $seat_number)
+                            @if(isset($seat_number->ticket->screening_id) && $seat_number->ticket->screening_id == $idscreening && isset($seat_number->ticket->user_id))
+                            <div id="{{$seat_number->id}}" class="seatNumber seatDisable" value="{{$seat_number->row}}{{$seat_number->number}}">{{$seat_number->number}}</div>
+                            @else
+                            <div id="{{$seat_number->id}}" class="seatNumber" value="{{$seat_number->row}}{{$seat_number->number}}">{{$seat_number->number}}</div>
+                            @endif
+                            @endforeach
+                        </div>
+                        @endforeach
+                        <div class="seatReceipt">
+                            <button class="btnClear">Clear</button>
+                        </div>
                     </div>
 
-
-                    <div class="seatStructure" style="position:absolute;" >
-                        <center>
-                            <div class="screen">SCREEN</div>
-                            <div class="seatcolor">
-                                <span class="seat-gray">Ghế đã bán</span>
-                                <span class="seat-blue">Có thể chọn</span>
-                                <span class="seat-green">Ghế đang chọn</span>
-                            </div>
-                            <div class="seatBooking">
-                                @foreach ($seats as $seat)
-
-                                <div class="seatRow">
-                                    <div class="seatRowName">
-                                        {{$seat->row}}
-                                    </div>
-                                    @foreach ($seat['number'] as $seat_number)
-                                    <div id="{{$seat_number->id}}" class="seatNumber seatDisable" value="{{$seat_number->row}}{{$seat_number->number}}"> <a href="">{{$seat_number->number}}</a></div>
-                                    @endforeach
-                                </div>
-                                @endforeach
-                                <div class="seatReceipt">
-                                    <button class="btnClear">Clear</button>
-                                </div>
-                            </div>
-                        </center>
-                    </div>
-                    <br /><br />
                 </div>
-                <button class="tt" style="float: right;margin-bottom: 10px;border: 1px solid;padding: 10px 15px">Tiếp Tục</button>
+
+                <br /><br />
             </div>
+            <button class="tt" style="float: right;margin-bottom: 10px;border: 1px solid;padding: 10px 15px">Tiếp Tục</button>
         </div>
-        <div class="col-sm-3" style="margin-top: 50px">
+        <div class="col-sm-3" style="margin-top: 20px">
             <div style="background-color: #f9f9f9">
                 @foreach ($screenings as $screening)
                 <input type="hidden" class="screening_id" value="{{$screening->id}}">
@@ -94,30 +98,29 @@ $idscreening=$screening->id
                     <div>
                         <p><b>Rạp:</b>&nbsp;<span id="tenrap">{{$screening->cinema->cinema_name}}</span></p>
                         <p><b>Phòng:</b>&nbsp;<span id="tenphong">{{$screening->room->room_name}}</span></p>
-                        <p><b>Suất chiếu:</b>&nbsp;<span id="ngay">{{date('d-m-Y', strtotime($screening->date))}}</span>&nbsp;|&nbsp;<span id="thoigian">{{date('G:i',strtotime($screening->time))}}</span></p>
+                        <p><b>Suất chiếu:</b>&nbsp;<span id="ngay">{{date('d-m-Y', strtotime($screening->date))}}</span>&nbsp;|&nbsp;<span id="thoigian">{{date('G:i',strtotime($screening->start_time))}}</span></p>
                         @endforeach
-                        <div><b>Combo:</b>&nbsp;<div class="comboList"></div>
-                        </div>
-                        <div><b>Ghế:</b>&nbsp;<div class="seatList"></div>
-                        </div>
                     </div>
-                    <div>
-                        <p><b>Tổng:</b><span id="total"> </span>&nbsp;VNĐ</p>
+                    <div><b>Ghế:</b>&nbsp;<div class="seatList"></div>
                     </div>
-                    <div>
-                        @if (!Auth::check())
-                        <a href="{{route('cinema.loginpage')}}" class="text-danger">Đăng nhập để tiếp tục</a>
-                        @else
-                        <center>
-                            <button id="addve" class="order-ticket">Đặt vé</button>
-                        </center>
-                        @endif
+                </div>
+                <div>
+                    <p><b>Tổng:</b><span id="total"> </span>&nbsp;VNĐ</p>
+                </div>
+                <div>
+                    @if (!Auth::check())
+                    <a href="{{route('cinema.loginpage')}}" class="text-danger">Đăng nhập để tiếp tục</a>
+                    @else
+                    <center>
+                        <button id="addve" class="order-ticket">Đặt vé</button>
+                    </center>
+                    @endif
 
-                    </div>
                 </div>
             </div>
         </div>
     </div>
+</div>
 </div>
 <script type="text/javascript">
     $(document).ready(function() {
@@ -127,14 +130,14 @@ $idscreening=$screening->id
                 if ($(this).hasClass("seatSelected")) {
                     var thisName = $(this).attr('value');
                     $(this).removeClass("seatSelected");
-                    $(".seatList ." + thisName).remove();
+                    $(".seatList." + thisName).remove();
                 }
             } else {
                 if (!$(this).hasClass("seatDisable")) {
                     if ($(this).hasClass("seatSelected")) {
                         var thisName = $(this).attr('value');
                         $(this).removeClass("seatSelected");
-                        $(".seatList ." + thisName).remove();
+                        $(".seatList." + thisName).remove();
                     } else {
                         $(this).addClass("seatSelected");
                         var thisName = $(this).attr('value');
@@ -158,23 +161,20 @@ $idscreening=$screening->id
             }
         });
         var allseat = [];
-        var combo = {
-            id: null,
-            sl: null
-        };
         $(".order-ticket").click(function() {
             var selectedSeats = parseInt($(".seatSelected").length);
             if ($("#Numseats").val() == selectedSeats) {
                 $(".seatSelected").each(function() {
                     allseat.push($(this).attr('id'));
                 });
-                var url = "http://localhost/quintessa-cinema/ajaxorderticket";
+                var url = "http://127.0.0.1:8000/ajaxorderticket";
                 var screening_id = $('.screening_id').val();
                 var user_id = $('.user_id').val();
 
-                $.get({
-                    type: 'GET',
+                $.post({
                     url: url,
+                    type: 'POST',
+                    dataType: 'interger',
                     data: {
                         screeningid: screening_id,
                         userid: user_id,
@@ -182,6 +182,7 @@ $idscreening=$screening->id
                     },
                     success: function(response) {
                         alert("đặt vé thành công");
+
                     }
                 });
             } else {

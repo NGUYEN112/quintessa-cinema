@@ -39,7 +39,7 @@ class AdminController extends Controller
 	public function manageScreening()
 	{
 		$screenings = Screening::paginate(10);
-		$films = Film::where('status',2)->get();
+		$films = Film::where('status',1)->get();
 		return view('admin.manage.screenings',compact('screenings','films'));
 	}
 	public function manageRoom()
@@ -50,7 +50,7 @@ class AdminController extends Controller
 	public function manageSeat()
 	{	$seats = Seat::paginate(10);
 		$rooms = Room::all();
-		return view('admin.manage.seat',compact('seats','rooms'));
+		return view('admin.manage.seat',compact('seats','rooms','show_seat'));
 	}
 
 	public function manageUser()
@@ -59,11 +59,17 @@ class AdminController extends Controller
 	}
 	public function manageTicket()
 	{
-		$tickets = Ticket::where('user_id','<>','NULL')->paginate(10);
+		$tickets = Ticket::select('user_id')
+		->where('user_id','<>','NULL')
+		->groupBy('user_id')
+		->distinct()
+		->paginate(10);
 		for ($i=0; $i < count($tickets) ; $i++) { 
-			$p = Ticket::select('screening_id','seat_id')->where('user_id','<>','NULL')->get();
+			$p = Ticket::select('screening_id')->where('user_id','<>','NULL')->groupBy('screening_id')->distinct()->get();
 			for ($j=0; $j < count($p); $j++) { 
-				$g = Ticket::where([['user_id',$tickets[$i]->user_id],['screening_id',$p[$j]->screening_id]])->select('seat_id')->get();
+				$g = Ticket::select('seat_id')
+				->where([['user_id',$tickets[$i]->user_id],['screening_id',$p[$j]->screening_id]])
+				->get();
 				$p[$j]['seat_id']=$g;
 			}
 			$tickets[$i]['screening_id']=$p;

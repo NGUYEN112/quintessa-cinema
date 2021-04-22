@@ -23,7 +23,7 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
       $dataArray = [];
-      for($i =4;$i<23;$i++) {
+      for($i =4;$i<24;$i++) {
         array_push($dataArray, [
           'screening_id' => 1,
           'seat_id' => $i+1,

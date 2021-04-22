@@ -80,7 +80,7 @@ Route::group(['prefix' =>'admin','middleware' => 'admin'], function() {
 Route::get('ajax/seat/{id}',[AdminController::class,'showSeat']);
 Route::get('ajax/screening/{id}',[AdminController::class,'getScreening']);
 Route::get('ajax/room/{id}',[AdminController::class,'getRoom']);
-Route::get('/ajaxorderticket',[CinemaController::class,'orderticket']);
+Route::post('/ajaxorderticket',[CinemaController::class,'orderticket']);
 
 Route::get('link', function() {
    $screening = Ticket::find(1)->screening->film;

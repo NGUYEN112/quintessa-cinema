@@ -9,6 +9,8 @@ use App\Models\Ticket;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\DB;
+
 class CinemaController extends Controller
 {
     public function home()
@@ -18,73 +20,91 @@ class CinemaController extends Controller
         return view('cinemas.home', compact('publisheds', 'unreleaseds'));
     }
 
-    
+
 
     public function filmDetail($id)
     {
-        $films = Film::select('name')->where('id', $id)->get();
-        foreach ($films as $film) {
-            $title = $film->name;
-        }
-        $film = Film::where('id', $id)->get();
+
+        $film = Film::findOrFail($id);
         $relate_films = Film::where('status', '1')
             ->inRandomOrder()->limit(2)->get();
 
-        $screenings = Screening::where('film_id',$id)
-        ->get();
+        $screenings = Screening::select('cinema_id')
+            ->where('film_id', $id)
+            ->groupBy('cinema_id')
+            ->distinct()
+            ->get();
 
         for ($i = 0; $i < count($screenings); $i++) {
-            $screening = Screening::where([['film_id', $id], ['cinema_id', $screenings[$i]->cinema_id]])
-            ->get();
+            $screening = Screening::select('date')
+                ->where([['film_id', $id], ['cinema_id', $screenings[$i]->cinema_id]])
+                ->groupBy('date')
+                ->distinct()
+                ->get();
             for ($k = 0; $k < count($screening); $k++) {
-                $p = Screening::where([['film_id', $id], ['cinema_id', $screenings[$i]->cinema_id], ['date', $screening[$k]->date]])->get();
-                for ($j = 0; $j < count($p); $j++) {
-                    $t = Screening::where([['film_id', $id], ['cinema_id', $screenings[$i]->cinema_id], ['date', $screening[$k]->date], ['room_id', $p[$j]->room_id]])->get();
-                    $p[$j]['time'] = $t;
+                $datesrc = Screening::select('room_id')
+                    ->where([['film_id', $id], ['cinema_id', $screenings[$i]->cinema_id], ['date', $screening[$k]->date]])
+                    ->groupBy('room_id')
+                    ->distinct()
+                    ->get();
+                for ($j = 0; $j < count($datesrc); $j++) {
+                    $timesrc = Screening::where([['film_id', $id], ['cinema_id', $screenings[$i]->cinema_id], ['date', $screening[$k]->date], ['room_id', $datesrc[$j]->room_id]])->distinct()->get();
+                    $datesrc[$j]['time'] = $timesrc;
                 }
-                $screening[$k]['room_id'] = $p;
+                $screening[$k]['room_id'] = $datesrc;
             }
 
             $screenings[$i]['date'] = $screening;
         }
-        // dd($screenings);
+        // var_dump($screenings[1]);
 
-        return view('cinemas.films', compact('title','film', 'relate_films', 'screenings'));
+        return view('cinemas.films', compact('film', 'relate_films', 'screenings'));
     }
 
-    public function orderTicketDetail($id) {
-        $screenings = Screening::where('id',$id)->get();
+    public function orderTicketDetail($id)
+    {
+        $screenings = Screening::where('id', $id)->get();
         foreach ($screenings as $screening) {
-            $room_id=$screening->room_id;
+            $room_id = $screening->room_id;
         }
-        // $datghe=datghe::where('id_lichchieu',$id)->get();
-        $seats = Seat::where('room_id',$room_id)->get();
-        for($i=0;$i<count($seats);$i++){
-            $seat = Seat::where([['room_id',1],['row',$seats[$i]->row]])->get();
 
-            $seats[$i]['number']=$seat;
+        $seats = Seat::select('row')
+            ->where('room_id', $room_id)
+            ->groupBy('row')
+            ->distinct()
+            ->get();
+
+        for ($i = 0; $i < count($seats); $i++) {
+            $seat = Seat::where([['room_id', 1], ['row', $seats[$i]->row]])->get();
+
+            $seats[$i]['number'] = $seat;
         }
-        
-        $tickets = Ticket::where('screening_id',$id)->get();
-        return view('cinemas.orderticket',compact('screenings','seats','tickets'));
+
+        $tickets = Ticket::where('screening_id', $id)->get();
+        return view('cinemas.orderticket', compact('screenings', 'seats', 'tickets'));
     }
 
-    public function publishedFilm() {
-        $publisheds = Film::where('status','1')->get();
+    public function publishedFilm()
+    {
+        $publisheds = Film::where('status', '1')->get();
         return view('cinemas.published-film', compact('publisheds'));
     }
 
-    public function unreleasedFilm() {
-        $unreleaseds = Film::where('status','0')->get();
+    public function unreleasedFilm()
+    {
+        $unreleaseds = Film::where('status', '0')->get();
         return view('cinemas.unreleased-film', compact('unreleaseds'));
     }
 
-    public function orderticket(Request $request) {
+    public function orderticket(Request $request)
+    {
         $seats = $request->allseat;
-        for ($i=0; $i < count($seats) ; $i++) { 
-            $tickets = Ticket::where([['screening_id',$request->screeningid],['seat_id',$seats[$i]]])->update([
-                'user_id'=>$request->userid
-            ]);
+        $tickets = new Ticket();
+        for ($i = 0; $i < count($seats); $i++) {
+        $tickets->screening_id = $request->screening_id;
+        $tickets->user_id = $request->user_id;
+        $tickets->seat_id = $seats[$i];
+        $tickets->save();
         }
     }
 }

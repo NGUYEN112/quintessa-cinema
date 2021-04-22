@@ -26,7 +26,7 @@
 									<label class="col-md-3 form-control-label">Rạp</label>
 									<div class="col-md-9">
 										<select name="cinema" class="form-control" id="rap">
-											<option checked></option>
+											<!-- <option checked></option> -->
 											@foreach ($cinemas as $cinema)
 											<option value="{{$cinema->id}}">{{$cinema->cinema_name}}</option>
 											@endforeach

@@ -7,7 +7,15 @@ use Illuminate\Database\Eloquent\Model;
 
 class Ticket extends Model
 {
+    
     use HasFactory;
+
+    protected $table = 'tickets';
+    protected $fillable = [
+        'screening_id',
+        'seat_id',
+        'user_id',
+    ];
     public function screening() {
         return $this->belongsTo('App\Models\Screening','screening_id','id');
     }

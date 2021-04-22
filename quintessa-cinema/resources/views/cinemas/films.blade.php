@@ -3,43 +3,38 @@
 @section('content')
 <div class="container mt-5">
     <div class="row">
-        @foreach($film as $move)
         <div class="col-xs-12 col-sm-8 col-md-8">
             <div class="row">
                 <div class="col-xs-8 col-sm-4 col-md-4 image">
-                    <img src="{{asset('/storage/images/' .$move->image)}}" alt="image" width="100%">
+                    <img src="{{asset('/storage/images/' .$film->image)}}" alt="image" width="100%">
                 </div>
                 <div class="col-sx-12 col-sm-8 col-md-8">
-                    <h2 class="text-uppercase title-movie">{{$move->name}}</h2>
-                    <h3 class="text-uppercase title-movie en">{{$move->global_name}}</h3>
+                    <h2 class="text-uppercase title-movie">{{$film->name}}</h2>
+                    <h3 class="text-uppercase title-movie en">{{$film->global_name}}</h3>
                     <div class="movie-info">
                         <div class="info">
                             <label>Thời lượng:&nbsp;</label>
-                            <span>{{$move->durations}} phút</span>
+                            <span>{{$film->durations}} phút</span>
                         </div>
                         <div class="info">
                             <label>Thể loại:&nbsp;</label>
-                            <span>{{$move->categories}}</span>
+                            <span>{{$film->categories}}</span>
                         </div>
                         <div class="info">
                             <label>Nhà sản xuất:&nbsp;</label>
-                            <span>{{$move->producer}}</span>
+                            <span>{{$film->producer}}</span>
                         </div>
                         <div class="info">
                             <label>Đạo diễn:&nbsp;</label>
-                            <span>{{$move->director}}</span>
+                            <span>{{$film->director}}</span>
                         </div>
                         <div class="info">
                             <label>Diễn viên:&nbsp;</label>
-                            <span>{{$move->case}}</span>
+                            <span>{{$film->case}}</span>
                         </div>
-                        <!-- <div class="info">
-                            <label>Quốc gia:&nbsp;</label>
-                            <span>{{$move->quocgia}}</span>
-                        </div> -->
                         <div class="info">
                             <label>Ngày khởi chiếu:&nbsp;</label>
-                            <span>{{date('d-m-Y', strtotime($move->release_date))}}</span>
+                            <span>{{date('d-m-Y', strtotime($film->release_date))}}</span>
                         </div>
                     </div>
                 </div>
@@ -50,10 +45,10 @@
                         <h3>Nội Dung Phim</h3>
                         <div class="content-text">
                             <br>
-                            <p>{{$move->description}}</p>
+                            <p>{{$film->description}}</p>
                         </div>
                         <div class="trailer">
-                            {!!$move->trailer!!}
+                            {!!$film->trailer!!}
                         </div>
                     </div>
                 </div>
@@ -104,7 +99,6 @@
                 </div>
             </div>
         </div>
-        @endforeach
         <div class="col-xs-12 col-sm-4 col-md-4">
             <h3 class="relate-film">Phim Đang Chiếu</h3>
             <div class="row">

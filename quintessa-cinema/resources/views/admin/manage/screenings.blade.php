@@ -8,7 +8,6 @@
 				<div class="col-lg-12 mb-4">
 					<label class="ml-3">Tìm Kiếm Theo Tên Phim:</label>
 					<select class="form-control w-50 mb-3" id="lich">
-						<option checked></option>
 						@foreach ($films as $film)
 							<option value="{{$film->id}}">{{$film->name}}</option>
 						@endforeach
