@@ -17,6 +17,11 @@
   <!-- Custom stylesheet - for your changes-->
   <link rel="stylesheet" href="{{asset('/storage/admin_assets/css/custom.css')}}">
   <link rel="stylesheet" href="{{asset('/storage/admin_assets/css/style.css')}}">
+
+  <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+  <!-- <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script> -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <!-- Favicon-->
 </head>
 
@@ -69,27 +74,11 @@
 
 
 
-  <script src="{{asset('/storage/vendor/unisharp/laravel-ckeditor/ckeditor.js')}}"></script>
-  <script src="{{asset('/storage/ckfinder/ckfinder.js')}}"></script>
-  <script>
-    CKFinder.config({
-      connectorPath: '/ckfinder/connector'
-    });
-  </script>
-  <script>
-    CKEDITOR.replace('noidungtt', {
-      filebrowserBrowseUrl: "{{asset('/storage/ckfinder/ckfinder.html')}}",
-      filebrowserUploadUrl: "{{asset('/storage/ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Files')}}"
-    });
-  </script>
-  <script>
-    CKEDITOR.replace('ttrap', {
-      filebrowserBrowseUrl: "{{asset('/storage/ckfinder/ckfinder.html')}}",
-      filebrowserUploadUrl: "{{asset('/storage/ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Files')}}"
-    });
-  </script>
+  <!-- <script src="{{asset('/storage/vendor/unisharp/laravel-ckeditor/ckeditor.js')}}"></script>
+  <script src="{{asset('/storage/ckfinder/ckfinder.js')}}"></script> -->
 
-  <script src="{{asset('/storage/admin_assets/vendor/jquery/jquery.min.js')}}"></script>
+
+  <!-- <script src="{{asset('/storage/admin_assets/vendor/jquery/jquery.min.js')}}"></script>
   <script src="{{asset('/storage/admin_assets/vendor/popper.js/umd/popper.min.js')}}"> </script>
   <script src="{{asset('/storage/admin_assets/vendor/bootstrap/js/bootstrap.min.js')}}"></script>
   <script src="{{asset('/storage/admin_assets/vendor/jquery.cookie/jquery.cookie.js')}}"> </script>
@@ -97,7 +86,12 @@
   <script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
   <script src="{{asset('/storage/admin_assets/js/charts-home.js')}}"></script>
   <script src="{{asset('/storage/admin_assets/js/front.js')}}"></script>
-  <script src="{{asset('/storage/js/adminjs.js')}}"></script>
+  <script src="{{asset('/storage/js/adminjs.js')}}"></script> -->
+
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 
 </body>
 

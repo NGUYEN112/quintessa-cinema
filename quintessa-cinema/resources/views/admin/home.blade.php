@@ -61,6 +61,7 @@
                 <tr>
                   <th>STT</th>
                   <th>Tên Phim</th>
+                  <th>Suất chiếu</th>
                   <th>SL vé đã bán</th>
                 </tr>
                 @php
@@ -80,6 +81,7 @@
                 <tr>
                   <td>{{$stt}}</td>
                   <td>{{$screening->film->name}}</td>
+                  <td>{{date('d-m-Y', strtotime($screening->date))}}/{{$screening->start_time}}</td>
                   <td>{{$screening->cinema_id}}</td>
                 </tr>
                 @endforeach

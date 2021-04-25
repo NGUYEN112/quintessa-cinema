@@ -3,21 +3,31 @@
 namespace App\Http\Controllers;
 
 use App\Models\Film;
+use App\Models\Newsfeed;
 use App\Models\Screening;
 use App\Models\Seat;
 use App\Models\Ticket;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use SebastianBergmann\Environment\Console;
 
 class CinemaController extends Controller
 {
     public function home()
     {
-        $publisheds = Film::where('status', '1')->limit(4)->get();
-        $unreleaseds = Film::where('status', '0')->limit(4)->get();
-        return view('cinemas.home', compact('publisheds', 'unreleaseds'));
+        $films = Film::all();
+        return view('cinemas.home', compact('films'));
+    }
+
+    public function showMemberPage() {
+        return view('cinemas.member');
+    }
+
+    public function showAboutUsPage() {
+        return view('cinemas.about-us');
     }
 
 
@@ -98,13 +108,20 @@ class CinemaController extends Controller
 
     public function orderticket(Request $request)
     {
-        $seats = $request->allseat;
-        $tickets = new Ticket();
+        
+        $seats = $request->allseats;
         for ($i = 0; $i < count($seats); $i++) {
-        $tickets->screening_id = $request->screening_id;
-        $tickets->user_id = $request->user_id;
+        $tickets = new Ticket();
+        $tickets->screening_id = $request->screeningid;
+        $tickets->user_id = $request->userid;
         $tickets->seat_id = $seats[$i];
         $tickets->save();
         }
+        return redirect()->route('cinema.published');
+    }
+
+    public function showProfilePage() {
+        $tickets = Ticket::where('user_id', auth()->user()->id)->get();
+        return view('cinemas.profile',compact('tickets'));
     }
 }

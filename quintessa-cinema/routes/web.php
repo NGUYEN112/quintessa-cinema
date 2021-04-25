@@ -29,8 +29,9 @@ Route::group(['prefix' => 'cinema'], function() {
     Route::get('/published',[CinemaController::class,'publishedFilm'])->name('cinema.published');
     Route::get('/unreleased',[CinemaController::class,'unreleasedFilm'])->name('cinema.unreleased');
     // Route::post('/ticket/{id}',[CinemaController::class,'storeOrder'])->name('cinema.order');
-    // Route::get('/members',[CinemaController::class,'showMemberPage'])->name('cinema.member');
-    // Route::get('/about-us',[CinemaController::class,'showAboutUsPage'])->name('cinema.about-us');
+    Route::get('/members',[CinemaController::class,'showMemberPage'])->name('cinema.member');
+    Route::get('/about-us',[CinemaController::class,'showAboutUsPage'])->name('cinema.about-us');
+    Route::get('/profile',[CinemaController::class,'showProfilePage'])->name('cinema.profile');
 
     Route::get('/login',[AuthController::class,'loginPage'])->name('cinema.loginpage');
     Route::post('/login',[AuthController::class,'login'])->name('cinema.login');
@@ -44,10 +45,15 @@ Route::group(['prefix' =>'admin','middleware' => 'admin'], function() {
 
     //route quan ly cinema//
     Route::get('/managefilm',[AdminController::class,'manageFilm'])->name('admin.managefilm');
+    Route::post('/managefilm',[AdminController::class,'getFilmList'])->name('admin.getFilmList');
     Route::get('/managecinema',[AdminController::class,'manageCinema'])->name('admin.managecinema');
+
     Route::get('/managescreening',[AdminController::class,'manageScreening'])->name('admin.managescreening');
+    Route::get('/managescreening/list',[AdminController::class,'getScreeningList'])->name('admin.getscrlist');
+
     Route::get('/manageroom',[AdminController::class,'manageRoom'])->name('admin.manageroom');
     Route::get('/manageseat',[AdminController::class,'manageSeat'])->name('admin.manageseat');
+    Route::get('/seatlist/{id}',[AdminController::class,'showSeat'])->name('admin.showseat');
     Route::get('/manageuser',[AdminController::class,'manageUser'])->name('admin.manageuser');
     Route::get('/manageticket',[AdminController::class,'manageTicket'])->name('admin.manageticket');
 
@@ -59,7 +65,7 @@ Route::group(['prefix' =>'admin','middleware' => 'admin'], function() {
     Route::get('/deletefilm/{id}',[AdminController::class,'deleteFilm'])->name('admin.deletefilm');
 
     //route thao tac cinema//
-    Route::get('/addcinema',[AdminController::class,'addCinemaPage'])->name('admin.managecinema.page');
+    Route::get('/addcinema',[AdminController::class,'addCinemaPage'])->name('admin.addcinema.page');
     Route::post('/addcinema',[AdminController::class,'addCinema'])->name('admin.addcinema');
     Route::get('/deletecinema/{id}',[AdminController::class,'deleteCinema'])->name('admin.deletecinema');
 
@@ -80,7 +86,7 @@ Route::group(['prefix' =>'admin','middleware' => 'admin'], function() {
 Route::get('ajax/seat/{id}',[AdminController::class,'showSeat']);
 Route::get('ajax/screening/{id}',[AdminController::class,'getScreening']);
 Route::get('ajax/room/{id}',[AdminController::class,'getRoom']);
-Route::post('/ajaxorderticket',[CinemaController::class,'orderticket']);
+Route::post('/ajaxorderticket',[CinemaController::class,'orderticket'])->name('store.ajaxorderticket');
 
 Route::get('link', function() {
    $screening = Ticket::find(1)->screening->film;

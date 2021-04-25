@@ -11,4 +11,8 @@ class Room extends Model
     public function seat() {
         return $this->hasMany('App\Models\Screening','room_id','id');
     }
+
+    public function cinema() {
+        return $this->belongsTo('App\Models\Cinema');
+    }
 }

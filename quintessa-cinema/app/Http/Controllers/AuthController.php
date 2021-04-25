@@ -29,7 +29,7 @@ class AuthController extends Controller
         ],[
             'repassword.same'=>'Bạn chưa nhập lại mật khẩu'
         ]);
-        $user=new User();
+        $user = new User();
         $user->name=$request->name;
         $user->email=$request->email;
         $user->password=bcrypt($request->password);

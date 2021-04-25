@@ -17,6 +17,7 @@
 									<tr>
 										<th>No.</th>
 										<th>Tên Phòng</th>
+										<th>Thuộc Rạp</th>
 										<th>Chức năng</th>
 									</tr>
 								</thead>
@@ -24,9 +25,10 @@
 									@foreach ($rooms as $key => $room)                     		
 									<tr>
 										<td>{{$key+1}}</td>
-										<td>{{$room->room_name}}</td>			
+										<td>{{$room->room_name}}</td>		
+										<td>{{$room->cinema->cinema_name}}</td>	
 										<td><a href="{{asset('admin.editroom',$room->id)}}"><button style="background-color: #ffffff00;border: none" title="Sửa"><i class="fas fa-edit text-success"></i></button></a><br>
-											<form action="{{asset('admin.deleteroom',$room->id)}}}" method="get" onsubmit="return confirm('Chắc chắn muốn xóa ?')">
+											<form action="{{route('admin.deleteroom',$room->id)}}" method="get" onsubmit="return confirm('Chắc chắn muốn xóa ?')">
 												@csrf
 												<button type="submit" style="background-color: #ffffff00;border: none" title="Xóa"><i class="fas fa-trash-alt text-danger"></i></button>
 											</form></td>

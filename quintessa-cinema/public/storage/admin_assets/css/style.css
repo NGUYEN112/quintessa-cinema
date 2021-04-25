@@ -31,3 +31,7 @@
     background-color: lightgreen;
     color: black;
 }
+
+.modal-content {
+    padding: 1rem
+}

@@ -8,45 +8,43 @@ $idscreening=$screening->id
 @endphp
 <div class="container">
     <div class="row">
-        <div class="col-sm-9" style="background-color: #f26b38 ;margin-top: 20px; position: relative;">
-            <!-- <div class="booking">
-                    <table class="table mt-3">
-                        <thead class="thead-dark">
-                            <tr>
-                                <th style="width: 50%">Vé</th>
-                                <th style="width: 15%">Số lượng</th>
-                                <th style="width: 15%">Giá(VNĐ)</th>
-                                <th style="width: 20%">Tổng(VNĐ)</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr style="background-color: #f9f9f9">
-                                <td>
-                                    @foreach ($screenings as $screening)
-                                    <span>{{$screening->film->name}}</span>
-                                    @endforeach
-
-                                </td>
-                                <td>
-                                    <div>
-                                        <input class="ticket_count" type="number" id="Numseats" style="width: 50px;" value="0" min="0" onchange="ticketPrice()">
-                                    </div>
-                                </td>
+        <div class="col-sm-9" style="background-color: #f26b38 ;margin-top: 20px; position: relative; height:fit-content">
+            <div class="booking">
+                <table class="table mt-3">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th style="width: 50%">Vé</th>
+                            <th style="width: 15%">Số lượng</th>
+                            <th style="width: 15%">Giá(VNĐ)</th>
+                            <th style="width: 20%">Tổng(VNĐ)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr style="background-color: #f9f9f9">
+                            <td>
                                 @foreach ($screenings as $screening)
-                                <td id="ticket_price">{{$screening->film->ticket_price}}</td>
+                                <span>{{$screening->film->name}}</span>
                                 @endforeach
-                                <td><span class="total_price"></span>&nbsp;vnđ</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div> -->
-            <div class="seatbooking" style="background-color: #fff;height: 600px">
 
-                <div class="inputForm">
-                </div>
+                            </td>
+                            <td>
+                                <div>
+                                    <input class="ticket_count" type="number" id="Numseats" style="width: 50px;" value="0" min="0" onchange="ticketPrice()">
+                                </div>
+                            </td>
+                            @foreach ($screenings as $screening)
+                            <td id="ticket_price">{{$screening->film->ticket_price}}</td>
+                            @endforeach
+                            <td><span class="total_price"></span>&nbsp;vnđ</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="seatbooking" style="background-color: #fff;height: auto">
 
 
-                <div class="seatStructure col-10" style="position:absolute;">
+
+                <div class="seatStructure" style=" width:100%">
 
                     <div class="screen ">SCREEN</div>
                     <div class="seatcolor">
@@ -55,18 +53,25 @@ $idscreening=$screening->id
                         <span class="seat-green">Ghế đang chọn</span>
                     </div>
                     <div class="seatBooking">
+
                         @foreach ($seats as $seat)
                         <div class="seatRow">
+
+
                             <div class="seatRowName">
                                 {{$seat->row}}
                             </div>
+
                             @foreach ($seat['number'] as $seat_number)
+
                             @if(isset($seat_number->ticket->screening_id) && $seat_number->ticket->screening_id == $idscreening && isset($seat_number->ticket->user_id))
-                            <div id="{{$seat_number->id}}" class="seatNumber seatDisable" value="{{$seat_number->row}}{{$seat_number->number}}">{{$seat_number->number}}</div>
+                            <div id="{{$seat_number->id}}" class="seatNumber seatDisable" value="{{$seat_number->row}}{{$seat_number->number}}"><a class="btn btn-outline-primary">{{$seat_number->number}}</a></div>
                             @else
-                            <div id="{{$seat_number->id}}" class="seatNumber" value="{{$seat_number->row}}{{$seat_number->number}}">{{$seat_number->number}}</div>
+                            <div id="{{$seat_number->id}}" class="seatNumber" value="{{$seat_number->row}}{{$seat_number->number}}"><a class="btn btn-outline-primary">{{$seat_number->number}}</a></div>
                             @endif
+
                             @endforeach
+
                         </div>
                         @endforeach
                         <div class="seatReceipt">
@@ -78,7 +83,7 @@ $idscreening=$screening->id
 
                 <br /><br />
             </div>
-            <button class="tt" style="float: right;margin-bottom: 10px;border: 1px solid;padding: 10px 15px">Tiếp Tục</button>
+            <button class="tt btn btn-primary" data-target="#continueModal" style="float: right;border: 1px solid;padding: 10px 15px">Tiếp Tục</button>
         </div>
         <div class="col-sm-3" style="margin-top: 20px">
             <div style="background-color: #f9f9f9">
@@ -87,12 +92,12 @@ $idscreening=$screening->id
                 @if (Auth::check())
                 <input type="hidden" class="user_id" value="{{Auth::user()->id}}">
                 @endif
-                <div class="col-md-12" style="text-align: center;">
-                    <img src="{{asset('/storage/images/' .$screening->film->image)}}" width="215" height="150">
+                <div class="col-md-12" style="text-align: center; margin-bottom: 15px">
+                    <img src="{{asset('/storage/' .$screening->film->image)}}" width="215" height="285">
                 </div>
                 <div class="col-md-12">
                     <div>
-                        <h4 style="font-size: 16px" id="tenphim">{{$screening->film->name}}</h4>
+                        <h4 style="font-size: 18px" id="tenphim">{{$screening->film->name}}</h4>
                         <h4 style="font-size: 14px" id="tentienganh">{{$screening->film->global_name}}</h4>
                     </div>
                     <div>
@@ -101,10 +106,10 @@ $idscreening=$screening->id
                         <p><b>Suất chiếu:</b>&nbsp;<span id="ngay">{{date('d-m-Y', strtotime($screening->date))}}</span>&nbsp;|&nbsp;<span id="thoigian">{{date('G:i',strtotime($screening->start_time))}}</span></p>
                         @endforeach
                     </div>
-                    <div><b>Ghế:</b>&nbsp;<div class="seatList"></div>
+                    <div><b>Ghế: </b> &nbsp;<div class="seatList"></div>
                     </div>
                 </div>
-                <div>
+                <div style="padding: 10px 15px 0px 15px ;">
                     <p><b>Tổng:</b><span id="total"> </span>&nbsp;VNĐ</p>
                 </div>
                 <div>
@@ -112,7 +117,8 @@ $idscreening=$screening->id
                     <a href="{{route('cinema.loginpage')}}" class="text-danger">Đăng nhập để tiếp tục</a>
                     @else
                     <center>
-                        <button id="addve" class="order-ticket">Đặt vé</button>
+                        <button id="addve" class="order-ticket btn btn-danger" >Đặt vé</button>
+                        @csrf
                     </center>
                     @endif
 
@@ -122,6 +128,30 @@ $idscreening=$screening->id
     </div>
 </div>
 </div>
+
+
+<!-- <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Thông báo</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body-failed">
+                Vui lòng chọn đủ số lượng vé!
+            </div>
+            <div class="modal-body-success">
+                Đặt vé thành công
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div> -->
+
 <script type="text/javascript">
     $(document).ready(function() {
         $(".seatNumber").click(function() {
@@ -147,6 +177,7 @@ $idscreening=$screening->id
             }
         });
 
+
         $(".btnClear").click(function() {
             $(".seatSelected").removeClass("seatSelected");
             $(".seatList span").remove();
@@ -160,6 +191,9 @@ $idscreening=$screening->id
                 $('.seatbooking').addClass('showseat');
             }
         });
+        
+                  
+                
         var allseat = [];
         $(".order-ticket").click(function() {
             var selectedSeats = parseInt($(".seatSelected").length);
@@ -167,29 +201,30 @@ $idscreening=$screening->id
                 $(".seatSelected").each(function() {
                     allseat.push($(this).attr('id'));
                 });
-                var url = "http://127.0.0.1:8000/ajaxorderticket";
+                var url = `/ajaxorderticket`;
                 var screening_id = $('.screening_id').val();
                 var user_id = $('.user_id').val();
-
-                $.post({
+                $.ajax({
                     url: url,
                     type: 'POST',
-                    dataType: 'interger',
                     data: {
+                        _token : $('[name="_token"]').val(),
                         screeningid: screening_id,
                         userid: user_id,
-                        allseat: allseat
+                        allseats: allseat,
+                        // totalprice: ticketPrice(),
                     },
                     success: function(response) {
                         alert("đặt vé thành công");
 
                     }
-                });
+                })
             } else {
-                alert('Vui lòng chọn đủ số lượng vé');
+                alert('Vui lòng chọn đủ số lượng vé')
             }
         });
     });
+    
     var ticket_price = document.getElementById('ticket_price').innerHTML;
     var ticket_count = document.getElementsByClassName('ticket_count');
     var total_price = document.getElementsByClassName('total_price');
@@ -206,18 +241,6 @@ $idscreening=$screening->id
             total_price[i].innerHTML = total_prc;
         }
         grand.innerHTML = total_prc;
-    }
-    calculate();
-
-    function calculate() {
-        let sum = 0;
-        for (i = 0; i < subs.length; i++) {
-            var subTotal = units[i].value * prices[i];
-            subs[i].innerHTML = subTotal;
-            sum += subTotal;
-        }
-
-        grand.innerHTML = sum + total_prc;
     }
 </script>
 @endsection

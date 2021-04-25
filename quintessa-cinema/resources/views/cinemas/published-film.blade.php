@@ -6,7 +6,7 @@
 		@foreach ($publisheds as $published)
 		<div class="col-md-3 mt-4">
 			<div class="moviedangchieu">
-				<img src="{{asset('/storage/images/' .$published->image)}}" width="100%" height="350px">
+				<img src="{{asset('/storage/' .$published->image)}}" width="100%" height="350px">
 				<a href="{{route('cinema.filmDetail',$published->id)}}">
 					<div class="decription-hover overlay">
 						<div class="decription-content">

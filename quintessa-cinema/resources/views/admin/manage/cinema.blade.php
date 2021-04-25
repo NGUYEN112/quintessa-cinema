@@ -9,7 +9,7 @@
 					<div class="card">
 						<div class="card-header">
 							<h6 class="text-uppercase mb-0">Quản Lý Rạp</h6>
-							<a href="{{route('admin.addcinema')}}" title="Thêm mới" style="position: absolute;right: 35px;top: 22px;"><i class="fas fa-plus-square text-success" style="font-size: 24px"></i></a>
+							<a onclick="openAddForm()" title="Thêm mới" style="position: absolute;right: 35px;top: 22px;"><i class="fas fa-plus-square text-success" style="font-size: 24px"></i></a>
 						</div>
 						<div class="card-body">                           
 							<table class="table table-hover card-text">
@@ -56,4 +56,63 @@
 			</div>
 		</footer>
 	</div>
+
+	<!-- Model form -->
+	<div class="modal fade" id="add-cinema-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+			<center>
+				<h5 class="modal-title" id="exampleModalLabel">Thêm lịch chiếu</h5>
+				</center>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body-add">
+				
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-primary" onclick="submitAddForm()">Thêm mới </button>
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+	<script>
+		function openAddForm() {
+		$("#add-cinema-modal").modal();
+
+		$.ajax({
+			url: `{{route('admin.addcinema.page')}}`,
+			success: function(xml) {
+					$('.modal-body-add').html(xml);
+
+				// Display Modal
+				$('#add-cinema-modal').modal('show');
+			}
+		})
+	}
+
+	function submitAddForm() {
+        const data = {
+            _token: document.querySelector(`.form-horizontal [name="_token"]`).value,
+            cinema_name: document.querySelector(`.form-horizontal [name="cinema_name"]`).value,
+            infomation: document.querySelector(`.form-horizontal [name="infomation"]`).value,
+        }
+
+        $.ajax({
+            url: `{{route('admin.addcinema')}}`,
+            type: 'POST',
+            data: data,
+            success: function() {
+                $("#add-cinema-modal").modal("hide");
+            },
+            error: function() {
+                alert("Edit Failed")
+            }
+        })
+    }
+	</script>
 @endsection

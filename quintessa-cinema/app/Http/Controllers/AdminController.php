@@ -31,26 +31,41 @@ class AdminController extends Controller
 		$films = Film::orderby('id','desc')->paginate(10);
 		return view('admin.manage.film',compact('films'));
 	}
+
+	public function getFilmList(Request $req) {
+		$films = Film::where('name', 'LIKE' ,'%'.$req->keyword.'%')
+		->orWhere('global_name', 'LIKE' ,'%'.$req->keyword.'%')
+        ->get();
+        return view('admin.manage.film', compact('films'));
+	}
 	public function manageCinema()
 	{
 		$cinemas = Cinema::paginate(10);
 		return view('admin.manage.cinema',compact('cinemas'));
 	}
+
+
 	public function manageScreening()
 	{
-		$screenings = Screening::paginate(10);
 		$films = Film::where('status',1)->get();
-		return view('admin.manage.screenings',compact('screenings','films'));
+		return view('admin.manage.screenings',compact('films'));
 	}
+	public function getScreeningList(){
+		$screenings = Screening::paginate(10);
+		
+		return view('admin.screening.screening-list',compact('screenings'));
+	}
+
 	public function manageRoom()
 	{	
 		$rooms = Room::paginate(5);
-		return view('admin.manage.room',compact('rooms'));
+		$cinemas = Cinema::all();
+		return view('admin.manage.room',compact('rooms','cinemas'));
 	}
 	public function manageSeat()
-	{	$seats = Seat::paginate(10);
+	{	
 		$rooms = Room::all();
-		return view('admin.manage.seat',compact('seats','rooms','show_seat'));
+		return view('admin.manage.seat',compact('rooms'));
 	}
 
 	public function manageUser()
@@ -83,10 +98,17 @@ class AdminController extends Controller
 	}
 	public function addFilm(Request $request)
 	{
+
+		dd($request->room);
 		$films = new Film();
 		$films->name = $request->name;
 		$films->global_name = $request->global_name;
-		$films->image = $request->image;
+		if ($request->hasFile('image')) {
+            $image = $request->file('image');
+            $path = $image->store('images', 'public');
+            $films->image = $path;
+        }
+
 		$films->producer = $request->producer;
 		$films->categories = $request->categories;
 		$films->director = $request->director;
@@ -94,10 +116,11 @@ class AdminController extends Controller
 		$films->durations = $request->durations;
 		$films->release_date = $request->release_date;
 		$films->status = $request->status;
+		
 		$films->trailer=$request->trailer;
 		$films->description = $request->description;
 		$films->ticket_price = $request->ticket_price;
-		$films->save();
+			$films->save();
 		return redirect('admin/managefilm');
 
 	}
@@ -159,22 +182,13 @@ class AdminController extends Controller
 	public function addScreening(Request $request)
 	{
 		$screenings= new Screening();
-		$screenings->film_id = $request->film;
-		$screenings->cinema_id = $request->cinema;
-		$screenings->room_id = $request->room;
+		$screenings->film_id = $request->film_id;
+		$screenings->cinema_id = $request->cinema_id;
+		$screenings->room_id = $request->room_id;
 		$screenings->date = $request->date;
 		$screenings->start_time = $request->start_time;
 		$screenings->save();
-
-		$seats = Seat::select('id')->where('room_id',$request->room)->get();
-		for ($i=0; $i < count($seats) ; $i++) { 
-			$tickets = new Ticket();
-			$tickets->screening_id = $screenings->id;
-			$tickets->seat_id = $seats[$i]->id;
-			$tickets->user_id = null;
-			$tickets->save();
-		}
-		return redirect()->route('admin.managescreening');
+		return;
 	}
 
 	public function editScreeningPage($id)
@@ -242,22 +256,7 @@ class AdminController extends Controller
 	}
 	public function showSeat($id)
 	{
-		$seats = Seat::where('room_id',$id)->get();
-		for($i=0;$i<count($seats);$i++){
-			$seat = Seat::where([['room_id',1],['row',$seats[$i]->row]])->get();
-
-			$seats[$i]['number']=$seat;
-		}
-		foreach ($seats as $seat) {
-			echo "<div class='seatBooking'>
-			<div class='seatRow'>
-			<div class='seatRowName'>
-			".$seat->row."
-			</div>";
-			foreach ($seat['number'] as $seat_number){
-			echo "<div id='".$seat_number->id."' class='seatNumber' value='".$seat_number->row."".$seat_number->number."'>".$seat_number->number."</div>";
-			}
-			"</div></div>";
-		}
+		$seats = Seat::where('room_id',$id)->limit(10)->get();
+		return view('admin.seat.seatlist',compact('seats'));
 	}
 }

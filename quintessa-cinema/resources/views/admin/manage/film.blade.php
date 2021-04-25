@@ -6,15 +6,23 @@
 	<div class="container-fluid px-xl-5">
 		<section class="py-5">
 			<div class="row">
+				
 				<div class="col-lg-12 mb-4">
-					{{-- <label>Tìm Kiếm : </label>
-					<input type="text" class="form-control w-50 mb-3" id="myInput" onkeyup="myFunction()" placeholder="Search"> --}}
+
+					<!-- <form class="input-group" method="POST" action="/admin/managefilm">
+						@csrf
+						<input type="text" class="form-control col-sm-3 form-control-label" placeholder="Keyword" aria-label="Search Keyword" aria-describedby="basic-addon2">
+						<div class="input-group-append">
+							<button class="btn btn-outline-warning" type="submit">Search</button>
+						</div>
+					</form> -->
+
 					<div class="card">
 						<div class="card-header">
 							<h6 class="text-uppercase mb-0">Quản Lý Phim</h6>
-							<a href="{{route('admin.addfilm')}}" title="Thêm mới" style="position: absolute;right: 35px;top: 22px;"><i class="fas fa-plus-square text-success" style="font-size: 24px"></i></a>
+							<a href="{{route('admin.addfilm.page')}}" title="Thêm mới" style="position: absolute;right: 35px;top: 22px;"><i class="fas fa-plus-square text-success" style="font-size: 24px"></i></a>
 						</div>
-						<div class="card-body">                           
+						<div class="card-body">
 							<table class="table table-hover card-text" id="tablephim">
 								<thead>
 									<tr>
@@ -30,22 +38,22 @@
 								</thead>
 								<tbody id="tbphim">
 									@php
-									
+
 									$stt=0;
 
 									if (isset($_GET['page'])) {
-										$a=$_GET['page'];
+									$a=$_GET['page'];
 
 									}
 									else{
-										$a=1;
+									$a=1;
 									}
 									$stt=($a-1)*10;
 									@endphp
 
-									@foreach ($films as $film)                     		
+									@foreach ($films as $film)
 									@php
-									
+
 									$stt++;
 									@endphp
 									<tr>
@@ -58,36 +66,55 @@
 											Đang Chiếu
 											@else
 											Sắp Chiếu
-										@endif</td>
+											@endif</td>
 										<td>{{$film->ticket_price}}</td>
+
 										<td><a href="{{route('admin.editfilm',$film->id)}}"><button style="background-color: #ffffff00;border: none" title="Sửa"><i class="fas fa-edit text-success"></i></button></a><br>
 											<form action="{{route('admin.deletefilm',$film->id)}}" method="get" onsubmit="return confirm('Chắc chắn muốn xóa ?')">
 												@csrf
 												<button type="submit" style="background-color: #ffffff00;border: none" title="Xóa"><i class="fas fa-trash-alt text-danger"></i></button>
-											</form></td>
-										</tr>
-										@endforeach
-									</tbody>
-								</table>
-							</div>
+											</form>
+										</td>
+									</tr>
+									@endforeach
+								</tbody>
+							</table>
 						</div>
 					</div>
-				</div>
-			</section>
-		</div>
-		<footer class="footer bg-white shadow align-self-end py-3 px-xl-5 w-100">
-			<div class="container-fluid">
-				<div class="row">
-					<div class="col-md-6 text-center text-md-left text-primary">
-						<p class="mb-2 mb-md-0">QUINTESSA Cinema &copy; 2021</p>
-					</div>
-					<div class="col-md-6 text-center text-md-right text-gray-400">
-						<p class="mb-0">Design by <a href="https://bootstrapious.com/admin-templates" class="external text-gray-400">Bootstrapious</a></p>
-						<!-- Please do not remove the backlink to us unless you support further theme's development at https://bootstrapious.com/donate. It is part of the license conditions. Thank you for understanding :)-->
-					</div>
+				
 				</div>
 			</div>
-		</footer>
+		</section>
 	</div>
+	<footer class="footer bg-white shadow align-self-end py-3 px-xl-5 w-100">
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-md-6 text-center text-md-left text-primary">
+					<p class="mb-2 mb-md-0">QUINTESSA Cinema &copy; 2021</p>
+				</div>
+				<div class="col-md-6 text-center text-md-right text-gray-400">
+					<p class="mb-0">Design by <a href="https://bootstrapious.com/admin-templates" class="external text-gray-400">Bootstrapious</a></p>
+					<!-- Please do not remove the backlink to us unless you support further theme's development at https://bootstrapious.com/donate. It is part of the license conditions. Thank you for understanding :)-->
+				</div>
+			</div>
+		</div>
+	</footer>
+</div>
 
-    @endsection
+<script>
+	// function loadAddPage() {
+	// 	var url = `{{route('admin.addfilm.page')}}`;
+	// 	$.ajax({
+	// 		url: url,
+	// 		success: function(xml) {
+
+	// 			$('.py-5 .row').html(xml);
+	// 		},
+	// 		error: function(error) {
+	// 			console.log("Xảy ra lỗi: " + error.message)
+	// 		}
+	// 	})
+	// }
+</script>
+
+@endsection

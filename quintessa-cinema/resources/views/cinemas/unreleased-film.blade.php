@@ -6,7 +6,7 @@
 		@foreach ($unreleaseds as $unreleased)
 		<div class="col-md-3 mt-4">
 			<div class="moviedangchieu">
-				<img src="{{asset('/storage/images/' .$unreleased->image)}}" width="100%" height="350px">
+				<img src="{{asset('/storage/' .$unreleased->image)}}" width="100%" height="350px">
 				<a href="{{route('cinema.filmDetail',$unreleased->id)}}">
 					<div class="decription-hover overlay">
 						<div class="decription-content">

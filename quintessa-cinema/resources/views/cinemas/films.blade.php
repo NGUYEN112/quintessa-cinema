@@ -6,7 +6,7 @@
         <div class="col-xs-12 col-sm-8 col-md-8">
             <div class="row">
                 <div class="col-xs-8 col-sm-4 col-md-4 image">
-                    <img src="{{asset('/storage/images/' .$film->image)}}" alt="image" width="100%">
+                    <img src="{{asset('/storage/' .$film->image)}}" alt="image" width="100%">
                 </div>
                 <div class="col-sx-12 col-sm-8 col-md-8">
                     <h2 class="text-uppercase title-movie">{{$film->name}}</h2>
@@ -105,7 +105,7 @@
                 @foreach($relate_films as $relate_film)
                 <div class="col-12 ">
                     <div class="movie relate-move">
-                        <img src="{{asset('/storage/images/' .$relate_film->image)}}" alt="image" width="100%">
+                        <img src="{{asset('/storage/' .$relate_film->image)}}" alt="image" width="100%">
                         <div class="decription-hover">
                             <a href=""><button class="btn btn-outline-secondary">Xem chi tiết</button></a>
                         </div>
