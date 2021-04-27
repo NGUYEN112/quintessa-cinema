@@ -5,8 +5,8 @@
 </div>
 
 <div class="container-content">
-<div class="card" style="width: 40rem;">
-    <div class="card-body mx-auto">
+<div class="card mx-auto" style="width: 40rem;">
+    <div class="card-body ">
         <h6 class="card-subtitle mb-2 text-muted">
             <p>Chương trình bao gồm 4 đối tượng thành viên <strong>U22 | QTS Member | QTS VIP và QTS VVIP</strong>, với những quyền lợi và mức ưu đãi khác nhau. Mỗi khi thực hiện giao dịch tại hệ thống rạp QTS, bạn sẽ nhận được một số điểm thưởng tương ứng với cấp độ thành viên:</p>
         </h6>

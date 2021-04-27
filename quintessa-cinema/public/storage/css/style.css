@@ -465,40 +465,10 @@ table th {
   width: 100%;
 }
 
-.user-profile {
-  width: 100%;
-  background-color: white;
-  height: 600px;
-  padding-top: 50px;
+.container-content .card {
+  float: inherit;
 }
 
-.avatar-form {
-  position: relative;
-}
-
-.change-avatar label {
-  position: absolute;
-  left: 110px;
-  top: 250px;
-  background: #fff;
-  padding: 35px 60px 35px 65px;
-  cursor: pointer;
-}
-
-.avatar-img {
-  float: left;
-}
-
-.user-info {
-  float: right;
-  width: 700px;
-  height: 100%;
-  margin-top: 100px;
-}
-
-.user-info p {
-  text-align: left;
-}
 
 .nav-content .navbar-brand img{
   height: 50px;
@@ -579,4 +549,11 @@ ol, ul, li {
 	display: block;
 	background: #535556;
 }
+
+#custom-dropdown {
+  left: auto;
+  right: 0  ;
+}
+
+
 

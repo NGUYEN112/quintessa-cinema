@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Quintessa Cinema</title>
     <link rel="stylesheet" href="{{asset('/storage/css/style.css')}}">
+    <link rel="stylesheet" href="{{asset('/storage/css/profile.css')}}">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="{{asset('/storage/fontawesome/css/all.css')}}">
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
@@ -64,18 +65,19 @@
                 </ul>
             </div>
             <div class="d-flex dropdown">
-            @if (isset(Auth::user()->name))
+                @if (isset(Auth::user()->name))
                 @if(Auth::user()->level == 1)
-                <ul class="navbar-nav mb-2 mb-lg-0">
-                <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            Contact
+
+                <li class="nav-item dropdown ml-auto"><a id="userInfo" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="dropdown-toggle"><img src="{{asset('/storage/' .auth()->user()->avatar)}}" alt="" style="max-width: 2.5rem;" class="img-fluid rounded-circle shadow"></a>
+                    <div aria-labelledby="userInfo" class="dropdown-menu" id="custom-dropdown">
+                        <a href="#" class="dropdown-item">
+                            <strong class="d-block text-uppercase headings-font-family">{{Auth::user()->name}}</strong>
                         </a>
-                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <li><a class="dropdown-item" href="{{route('cinema.profile')}}"> Profile</a></li>
-                            <li><a class="dropdown-item" href="{{route('cinema.logout')}}"> Đăng xuất</a></li>
-                        </ul>
-                    </li>
+                        <div class=" dropdown-divider">
+                        </div><a href="{{route('cinema.profile')}}" class="dropdown-item">Profile</a>
+                        <div class="dropdown-divider"></div><a href="{{route('cinema.logout')}}" class="dropdown-item">Đăng xuất</a>
+                    </div>
+                </li>
                 @else
                 <a class="dropdown-item" href="{{route('cinema.logout')}}"> Đăng xuất</a>
                 @endif
@@ -84,8 +86,9 @@
                 <a href="{{route('cinema.loginpage')}}">Đăng nhập</a>
                 <a>/</a>
                 <a href="{{route('cinema.registerpage')}}">Đăng ký</a>
+
                 @endif
-                </ul>
+
             </div>
         </div>
     </nav>

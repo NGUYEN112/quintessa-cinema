@@ -31,7 +31,11 @@ Route::group(['prefix' => 'cinema'], function() {
     // Route::post('/ticket/{id}',[CinemaController::class,'storeOrder'])->name('cinema.order');
     Route::get('/members',[CinemaController::class,'showMemberPage'])->name('cinema.member');
     Route::get('/about-us',[CinemaController::class,'showAboutUsPage'])->name('cinema.about-us');
+
     Route::get('/profile',[CinemaController::class,'showProfilePage'])->name('cinema.profile');
+    Route::get('/avatar',[CinemaController::class,'showAvatar'])->name('cinema.avatarform');
+    Route::post('/changeavatar',[CinemaController::class,'changeAvatar'])->name('cinema.change-avatar');
+
 
     Route::get('/login',[AuthController::class,'loginPage'])->name('cinema.loginpage');
     Route::post('/login',[AuthController::class,'login'])->name('cinema.login');

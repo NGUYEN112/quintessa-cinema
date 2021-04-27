@@ -39,7 +39,7 @@
           </form>
         </li>
         @if (Auth::check())
-        <li class="nav-item dropdown ml-auto"><a id="userInfo" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link dropdown-toggle"><img src="{{asset('/storage/images/nguyen-avatar.jpg')}}" alt="Jason Doe" style="max-width: 2.5rem;" class="img-fluid rounded-circle shadow"></a>
+        <li class="nav-item dropdown ml-auto"><a id="userInfo" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link dropdown-toggle"><img src="{{asset('/storage/' .auth()->user()->avatar)}}" alt="" style="max-width: 2.5rem;" class="img-fluid rounded-circle shadow"></a>
           <div aria-labelledby="userInfo" class="dropdown-menu"><a href="#" class="dropdown-item"><strong class="d-block text-uppercase headings-font-family">{{Auth::user()->name}}</strong></a>
             <div class=" dropdown-divider">
             </div><a href="{{route('cinema.home')}}" class="dropdown-item">Trang chủ</a>

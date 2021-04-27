@@ -221,9 +221,7 @@
 
 	}
 
-	function submitEditForm(idScreening) {
 
-	}
 
 	function loadList() {
 		var url = `{{route('admin.getscrlist')}}`;

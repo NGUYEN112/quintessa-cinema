@@ -10,7 +10,7 @@ class Seat extends Model
     use HasFactory;
 
     public function room(){
-        return $this->belongsTo('App\Models\Room','room_id','id');
+        return $this->belongsTo('App\Models\Room');
     }
 
     public function ticket() {

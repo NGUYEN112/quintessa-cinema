@@ -212,11 +212,11 @@ $idscreening=$screening->id
                         screeningid: screening_id,
                         userid: user_id,
                         allseats: allseat,
-                        // totalprice: ticketPrice(),
+                        price: ticket_price,
+                        totalprice: tongtv,
                     },
                     success: function(response) {
                         alert("đặt vé thành công");
-
                     }
                 })
             } else {
@@ -233,7 +233,7 @@ $idscreening=$screening->id
     var subs = document.getElementsByClassName('subtotal-class');
     var grand = document.getElementById('total');
     ticketPrice();
-    var tongtv = 0;
+    var tongtv = ticketPrice();
 
     function ticketPrice() {
         for (i = 0; i < total_price.length; i++) {

@@ -108,20 +108,45 @@ class CinemaController extends Controller
 
     public function orderticket(Request $request)
     {
-        
         $seats = $request->allseats;
         for ($i = 0; $i < count($seats); $i++) {
         $tickets = new Ticket();
         $tickets->screening_id = $request->screeningid;
         $tickets->user_id = $request->userid;
         $tickets->seat_id = $seats[$i];
+        $tickets->total_price = $request->price;
         $tickets->save();
         }
+        $user = User::findOrFail(auth()->user()->id);
+        $user->point = $user->point + ($request->totalprice/100);
+        $user->save();
         return redirect()->route('cinema.published');
     }
 
     public function showProfilePage() {
-        $tickets = Ticket::where('user_id', auth()->user()->id)->get();
+        $tickets = Ticket::select('screening_id')
+        ->where('user_id', auth()->user()->id)
+        ->groupBy('screening_id')
+        ->get();
+        // dd($tickets);
+
+        for ($i = 0; $i < count($tickets); $i++) {
+            $ticket = Ticket::where([['user_id', auth()->user()->id], ['screening_id', $tickets[$i]->screening_id]])->distinct()->get();
+            $tickets[$i]['seat_id'] = $ticket;
+            // $tickets[$i]['total_price'] = $ticket[$i]['total_price'];
+            // $count = count($ticket);
+        }
+        
         return view('cinemas.profile',compact('tickets'));
+    }
+    public function showAvatar() {
+        return view('cinemas.avatar-form');
+    }
+
+    public function changeAvatar(Request $request) {
+        $user = User::where('user_id',auth()->user()->id)->update([
+            'avatar'=>$request->avatar
+        ]);
+        return view('cinemas.avatar-form');
     }
 }
